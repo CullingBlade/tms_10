@@ -17,17 +17,17 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new user_params
-      if @user.save
-        log_in @user
-        render @user
-      else
-        render "new"
+    if @user.save
+      log_in @user
+      redirect_to @user
+    else
+      render "new"
     end
   end
 
   def update
     if @user.update user_params
-      render @user
+      redirect_to @user
     else
       render "edit"
     end
@@ -39,11 +39,12 @@ class UsersController < ApplicationController
   end
 
   private
-    def set_user
-      @user = User.find params[:id]
-    end
+  def set_user
+    @user = User.find params[:id]
+  end
 
-    def user_params
-      params.require(:user).permit :name, :email, :image, :role, :password, :password_confirmation 
-    end
+  def user_params
+    params.require(:user).permit :name, :email, :image, :role, :password,
+                                 :password_confirmation 
+  end
 end

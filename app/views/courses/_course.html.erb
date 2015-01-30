@@ -1,0 +1,12 @@
+<%= form_for(@course) do |f| %>
+
+    <%= f.label :Name %><br>
+    <%= f.text_field :name, class: "form-control" %>
+
+    <%= f.label :Description %>
+    <%= f.text_area :description , class: "form-control" %>
+
+  <div class="actions">
+    <%= f.submit "Edit course", class: "btn btn-primary" %>
+  </div>
+<% end %>
