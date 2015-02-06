@@ -1,0 +1,17 @@
+<h1>Editing subject</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+  	<%= form_for(@subject) do |subject| %>
+  		<%= render "shared/subject_error_messages" %>
+    	<%= render "subject" , f: subject %>
+
+      <%= subject.fields_for :tasks do |task| %>
+    		<%= render "task_fields", f: task %>
+    	<% end %>	
+    	<p><%= creat_add_task_button subject, :tasks %></p>
+			<div class="actions">
+				<%= subject.submit "Save", class: "btn btn-primary" %>
+			</div>
+    <% end %>
+  </div>
+</div>

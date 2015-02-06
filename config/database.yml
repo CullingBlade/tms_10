@@ -5,12 +5,11 @@ common: &common
   pool: 5
   host: localhost
   username: root
-  password: 
+  password:
 
 development:
   <<: *common
   database: tms_development
-  socket: /tmp/mysql.sock
 
 test:
   <<: *common

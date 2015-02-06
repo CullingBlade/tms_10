@@ -1,0 +1,13 @@
+<h1>Subjects Infomation</h1>
+  Name: <%= @subject.name %>
+  <br>
+  Description: <%= @subject.description %>
+  <br>
+  <%= link_to "Show", @subject %>
+  <%= link_to "Edit", edit_subject_path(@subject) %>
+  <%= link_to "Delete", @subject, method: :delete, data: { confirm: "Are you sure?" } %>
+
+  <h2>List of tasks</h2>
+  <% @tasks.each do |task| %>
+    Name: <%= task.name %></td>
+  <% end %>

@@ -10,3 +10,8 @@ User.create!(name:  "root",
              role: "suppervisor",
              password:              "123456",
              password_confirmation: "123456")
+User.create!(name:  "nvluan",
+             email: "nvluan@gmail.com",
+             role: "trainee",
+             password:              "123456",
+             password_confirmation: "123456")

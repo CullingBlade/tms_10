@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'signup'   => 'users#new'
 
   resources :users, only: [:index, :show, :edit, :update]
+  resources :subjects
   root 'dashboard#show'
   
   namespace :suppervisor do

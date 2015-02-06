@@ -1,5 +1,5 @@
 <%= form_for [:suppervisor, @user] do |f| %>
-  <%= render "shared/error_messages" %>
+  <%= render "shared/user_error_messages" %>
   <%= f.label :name %><br>
   <%= f.text_field :name, class: "form-control" %>
 
@@ -16,7 +16,7 @@
 
   <%= f.label :password %><br>
   <%= f.password_field :password, class: "form-control" %>
-  <%= f.label :retype_password %><br>
+  <%= f.label :password_confirmation, 'Retype password' %><br>
   <%= f.password_field :password_confirmation, class: "form-control" %>
 
   <div class="actions">
