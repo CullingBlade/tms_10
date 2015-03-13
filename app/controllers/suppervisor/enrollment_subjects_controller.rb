@@ -22,6 +22,11 @@ class Suppervisor::EnrollmentSubjectsController < ::BaseSuppervisorController
       @course.finish = Time.zone.now
       @course.enrollments.update_all status: 2
       @course.enrollment_subjects.update_all status: 2
+      @course.subjects.each do |subject|
+        subject.tasks.each do |task|
+          task.enrollment_tasks.update_all status: 2
+        end        
+      end
       @course.save
       redirect_to suppervisor_course_path @course
     end

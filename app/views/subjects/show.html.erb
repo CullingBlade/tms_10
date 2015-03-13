@@ -7,4 +7,21 @@
 <strong>List of tasks</strong>
 <% @tasks.each do |task| %>
   <br><strong>Task Name: </strong><%= task.name %><br>
+  <% task.enrollment_tasks.each do |enrollment_task| %>
+    <% if enrollment_task.user == current_user && enrollment_task.status == 1%>
+      <div class="col-md-2">
+        <%= form_for @enrollment_task do |f| %>
+          <%= hidden_field_tag :task_id, task.id %>
+          <%= hidden_field_tag :subject_id, params[:id] %>
+          <%= hidden_field_tag :user_id, current_user.id %>
+          <%= hidden_field_tag :flag, 1 %>
+          <%= f.submit "Done", class: "btn btn-primary" %>
+        <% end %>
+      </div><br>
+    <% else %> 
+      <% if enrollment_task.user == current_user && enrollment_task.status == 2 %>
+        has done.
+      <% end %>
+    <% end %>
+  <% end %>
 <% end %>

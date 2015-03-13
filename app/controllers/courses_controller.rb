@@ -9,7 +9,11 @@ class CoursesController < ApplicationController
   def show
     @enrollment_subjects = current_user.enrollment_subjects.where course: @course
     @users = @course.users
-    @subjects = @course.subjects
+    @course.subjects.each do |subject|
+      subject.tasks.each do |task|
+        @enrollment_task = task.enrollment_tasks.new
+      end
+    end
   end
 
   def new
@@ -39,5 +43,4 @@ class CoursesController < ApplicationController
   def set_course
     @course = Course.find params[:id]
   end
-
 end

@@ -51,33 +51,44 @@
 <% @subjects.each do |subject| %>
   <strong>Subject Name:</strong> <%= subject.name %><br>
   <strong>Description:</strong><%= subject.description %><br>
-  <% subject.enrollment_subjects.each do |enrollment_subject| %>
-    <% if enrollment_subject.status == 0 %>
-      <div class="col-md-2">
-        <%= form_for [:suppervisor, @enrollment_task] do |f| %>
-          <div><%= hidden_field_tag :subject_id, subject.id %></div>
-          <div><%= hidden_field_tag :course_id, @course.id %></div>
-          <div><%= hidden_field_tag :flag, 1 %></div>
-          <%= f.submit "Start", class: "btn btn-primary" %>
+  <% @users.each do |user| %>
+    <% subject.enrollment_subjects.each do |enrollment_subject| %>
+      <% if user.id == enrollment_subject.user_id %>
+        <% if enrollment_subject.subject_id == subject.id && enrollment_subject.status == 0 %>
+          <div><strong>User: </strong><%= user.name %></div>
+          <div class="col-md-2">
+            <%= form_for [:suppervisor, @enrollment_task] do |f| %>
+              <div><%= hidden_field_tag :subject_id, subject.id %></div>
+              <div><%= hidden_field_tag :course_id, @course.id %></div>
+              <div><%= hidden_field_tag :user_id, user.id %></div>
+              <div><%= hidden_field_tag :enrollment_subject_id, enrollment_subject.id %></div>
+              <div><%= hidden_field_tag :flag, 1 %></div>
+              <%= f.submit "Start", class: "btn btn-primary" %>
+            <% end %>
+          </div><br>
+        <% else %>
+        <% if enrollment_subject.subject_id == subject.id && enrollment_subject.status == 1 %>
+            <div><strong>User: </strong><%= user.name %></div>
+            <strong>Started at:</strong> <%= Time.zone.now %><br>
+            <div class="col-md-2">
+              <%= form_for [:suppervisor, @enrollment_task] do |f| %>
+                <div><%= hidden_field_tag :subject_id, subject.id %></div>
+                <div><%= hidden_field_tag :course_id, @course.id %></div>
+                <div><%= hidden_field_tag :user_id, user.id %></div>
+                <div><%= hidden_field_tag :enrollment_subject_id, enrollment_subject.id %></div>
+                <div><%= hidden_field_tag :flag, 2 %></div>
+                <%= f.submit "Finish", class: "btn btn-primary" %>
+              <% end %>
+            </div><br>
+        <% else %>
+          <div><strong>User: </strong><%= user.name %></div>
+          <strong>Started at:</strong> <%= Time.zone.now %><br>
+          <strong>Finished at:</strong> <%= Time.zone.now %><br>
         <% end %>
-      </div><br>
-    <% else %>
-      <% if enrollment_subject.status == 1 %>
-        <strong>Started at:</strong> <%= Time.zone.now %><br>
-        <div class="col-md-2">
-          <%= form_for [:suppervisor, @enrollment_task] do |f| %>
-          <div><%= hidden_field_tag :subject_id, subject.id %></div>
-          <div><%= hidden_field_tag :course_id, @course.id %></div>
-          <div><%= hidden_field_tag :flag, 2 %></div>
-          <%= f.submit "Finish", class: "btn btn-primary" %>
-          <% end %>
-        </div><br>
-      <% else %>
-        <strong>Started at:</strong> <%= Time.zone.now %><br>
-        <strong>Finished at:</strong> <%= Time.zone.now %><br>
       <% end %>
     <% end %><br>
   <% end %>
+<% end %>
 
   <%= link_to "Show", suppervisor_subject_path(subject) %>
   <%= link_to "Edit", edit_suppervisor_subject_path(subject) %>

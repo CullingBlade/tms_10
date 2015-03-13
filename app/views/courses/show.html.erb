@@ -24,7 +24,7 @@
   <strong>List subject of this course</strong>
 </h2>
 <table>
-  <tr><th>Name</th><th>Description</th><th>Status</th></tr>
+  <tr><th>Name</th><th>Description</th><th>Status</th><th></th></tr>
   <% if @enrollment_subjects.count != 0 %>
     <% @enrollment_subjects.each do |enrollment_subject| %>
       <tr>
@@ -35,7 +35,8 @@
           <% when 0 %>
             NOT START
           <% when 1 %>
-            TRAINNG
+            TRAINING
+            <%= link_to "show", subject_path(enrollment_subject.subject) %>
           <% else %>
             FINISHED
           <% end %>
