@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,119 +10,113 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227075054) do
+ActiveRecord::Schema.define(version: 2015_02_27_075054) do
 
-  create_table "activities", force: true do |t|
-    t.text     "act_type"
-    t.integer  "user_id"
-    t.integer  "cource_id"
-    t.integer  "subject_id"
-    t.integer  "task_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "activities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.text "act_type"
+    t.integer "user_id"
+    t.integer "cource_id"
+    t.integer "subject_id"
+    t.integer "task_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cource_id"], name: "index_activities_on_cource_id"
+    t.index ["subject_id"], name: "index_activities_on_subject_id"
+    t.index ["task_id"], name: "index_activities_on_task_id"
+    t.index ["user_id"], name: "index_activities_on_user_id"
   end
 
-  add_index "activities", ["cource_id"], name: "index_activities_on_cource_id", using: :btree
-  add_index "activities", ["subject_id"], name: "index_activities_on_subject_id", using: :btree
-  add_index "activities", ["task_id"], name: "index_activities_on_task_id", using: :btree
-  add_index "activities", ["user_id"], name: "index_activities_on_user_id", using: :btree
-
-  create_table "courses", force: true do |t|
-    t.string   "name"
-    t.text     "description"
+  create_table "courses", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
     t.datetime "start"
     t.datetime "finish"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "courses_subjects", force: true do |t|
-    t.integer  "course_id"
-    t.integer  "subject_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "courses_subjects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "subject_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_courses_subjects_on_course_id"
+    t.index ["subject_id"], name: "index_courses_subjects_on_subject_id"
   end
 
-  add_index "courses_subjects", ["course_id"], name: "index_courses_subjects_on_course_id", using: :btree
-  add_index "courses_subjects", ["subject_id"], name: "index_courses_subjects_on_subject_id", using: :btree
-
-  create_table "enrollment_subjects", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "subject_id"
-    t.integer  "course_id"
-    t.integer  "courses_subject_id"
-    t.integer  "enrollment_id"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "enrollment_subjects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "subject_id"
+    t.integer "course_id"
+    t.integer "courses_subject_id"
+    t.integer "enrollment_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["course_id"], name: "index_enrollment_subjects_on_course_id"
+    t.index ["courses_subject_id"], name: "index_enrollment_subjects_on_courses_subject_id"
+    t.index ["enrollment_id"], name: "index_enrollment_subjects_on_enrollment_id"
+    t.index ["subject_id"], name: "index_enrollment_subjects_on_subject_id"
+    t.index ["user_id"], name: "index_enrollment_subjects_on_user_id"
   end
 
-  add_index "enrollment_subjects", ["course_id"], name: "index_enrollment_subjects_on_course_id", using: :btree
-  add_index "enrollment_subjects", ["courses_subject_id"], name: "index_enrollment_subjects_on_courses_subject_id", using: :btree
-  add_index "enrollment_subjects", ["enrollment_id"], name: "index_enrollment_subjects_on_enrollment_id", using: :btree
-  add_index "enrollment_subjects", ["subject_id"], name: "index_enrollment_subjects_on_subject_id", using: :btree
-  add_index "enrollment_subjects", ["user_id"], name: "index_enrollment_subjects_on_user_id", using: :btree
-
-  create_table "enrollment_tasks", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "task_id"
-    t.integer  "subject_id"
-    t.integer  "enrollment_subject_id"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "enrollment_tasks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "task_id"
+    t.integer "subject_id"
+    t.integer "enrollment_subject_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enrollment_subject_id"], name: "index_enrollment_tasks_on_enrollment_subject_id"
+    t.index ["subject_id"], name: "index_enrollment_tasks_on_subject_id"
+    t.index ["task_id"], name: "index_enrollment_tasks_on_task_id"
+    t.index ["user_id"], name: "index_enrollment_tasks_on_user_id"
   end
 
-  add_index "enrollment_tasks", ["enrollment_subject_id"], name: "index_enrollment_tasks_on_enrollment_subject_id", using: :btree
-  add_index "enrollment_tasks", ["subject_id"], name: "index_enrollment_tasks_on_subject_id", using: :btree
-  add_index "enrollment_tasks", ["task_id"], name: "index_enrollment_tasks_on_task_id", using: :btree
-  add_index "enrollment_tasks", ["user_id"], name: "index_enrollment_tasks_on_user_id", using: :btree
-
-  create_table "enrollments", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "course_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "status"
+  create_table "enrollments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "status"
+    t.index ["course_id"], name: "index_enrollments_on_course_id"
+    t.index ["user_id"], name: "index_enrollments_on_user_id"
   end
 
-  add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree
-  add_index "enrollments", ["user_id"], name: "index_enrollments_on_user_id", using: :btree
-
-  create_table "subjects", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "user_id"
-    t.integer  "enrollment_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "subjects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "user_id"
+    t.integer "enrollment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enrollment_id"], name: "index_subjects_on_enrollment_id"
+    t.index ["user_id"], name: "index_subjects_on_user_id"
   end
 
-  add_index "subjects", ["enrollment_id"], name: "index_subjects_on_enrollment_id", using: :btree
-  add_index "subjects", ["user_id"], name: "index_subjects_on_user_id", using: :btree
-
-  create_table "tasks", force: true do |t|
-    t.string   "name"
-    t.integer  "subject_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "tasks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.integer "subject_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_tasks_on_subject_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  add_index "tasks", ["subject_id"], name: "index_tasks_on_subject_id", using: :btree
-  add_index "tasks", ["user_id"], name: "index_tasks_on_user_id", using: :btree
-
-  create_table "users", force: true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "image"
-    t.string   "password_digest"
-    t.string   "remember_digest"
-    t.string   "reset_digest"
-    t.string   "activation_digest"
-    t.string   "role"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "image"
+    t.string "password_digest"
+    t.string "remember_digest"
+    t.string "reset_digest"
+    t.string "activation_digest"
+    t.string "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role"], name: "index_users_on_role"
   end
 
 end

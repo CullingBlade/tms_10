@@ -1,4 +1,4 @@
-class CreateCoursesSubjects < ActiveRecord::Migration
+class CreateCoursesSubjects < ActiveRecord::Migration[5.0]
   def change
     create_table :courses_subjects do |t|
       t.references :course, index: true

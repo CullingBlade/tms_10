@@ -1,4 +1,4 @@
-class CreateEnrollmentSubjects < ActiveRecord::Migration
+class CreateEnrollmentSubjects < ActiveRecord::Migration[5.0]
   def change
     create_table :enrollment_subjects do |t|
       t.references :user, index: true
